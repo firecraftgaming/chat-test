@@ -4,7 +4,7 @@ import { useUsernameStore } from "../../stores/useUsernameStore";
 
 export const Login: React.FC = () => {
 
-    const [username, setUsername] = useUsernameStore(state => [state.username, state.setUsername]);
+    const [username, setUsername] = useUsernameStore((state: any) => [state.username, state.setUsername]);
     const [error, setError] = useState(false);
 
     const router = useRouter();

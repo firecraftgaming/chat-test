@@ -6,7 +6,7 @@ import { isServer } from "../../../isServer";
 import { useUsernameStore } from "../../stores/useUsernameStore";
 
 export const HomePage: React.FC = () => {
-  const username = useUsernameStore(state => state.username);
+  const username = useUsernameStore((state: any) => state.username);
 
   if (!username) {
     const router = useRouter();
