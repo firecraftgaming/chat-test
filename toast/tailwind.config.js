@@ -2,7 +2,7 @@
 module.exports = {
   darkMode: "class",
   purge: {
-    content: ["./*.tsx"],
+    content: ["./**/*.tsx"],
   },
   theme: {
     fontFamily: {
