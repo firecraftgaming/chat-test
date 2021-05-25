@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { useUsernameStore } from "../../stores/useUsernameStore";
+import { useUsernameStore } from "../stores/useUsernameStore";
 
 export const Login: React.FC = () => {
 

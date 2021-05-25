@@ -2,8 +2,9 @@ import React from "react";
 import { useRouter } from "next/router";
 import { MainLayout } from "../../layouts/MainLayout";
 import { Loading } from "../../ui/Loading";
-import { isServer } from "../../../isServer";
+import { isServer } from "../../../lib/isServer";
 import { useUsernameStore } from "../../stores/useUsernameStore";
+import { Chat } from "../../ui/Chat";
 
 export const HomePage: React.FC = () => {
   const username = useUsernameStore((state: any) => state.username);
@@ -20,7 +21,7 @@ export const HomePage: React.FC = () => {
   }
   return (
     <MainLayout>
-      Yes!
+      <Chat/>
     </MainLayout>
   )
 };
