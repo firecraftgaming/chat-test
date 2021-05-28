@@ -3,13 +3,11 @@ defmodule Waffle.Message.Chat.Fetch do
 
     @primary_key false
     embedded_schema do
-      field(:message, :string)
     end
 
     def changeset(initializer \\ %__MODULE__{}, data) do
       initializer
-      |> cast(data, [:message])
-      |> validate_required([:message])
+      |> cast(data, [])
     end
 
     defmodule Reply do
@@ -24,8 +22,8 @@ defmodule Waffle.Message.Chat.Fetch do
     end
 
     def execute(changeset, state) do
-      with {:ok, %{message: message}} <- apply_action(changeset, :validate) do
-        {:reply, %{messages: []}, state}
+      with {:ok, %{}} <- apply_action(changeset, :validate) do
+        {:reply, %{messages: Hamburger.Storage.getMessages}, state}
       end
     end
   end

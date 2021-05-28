@@ -1,21 +1,26 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { useConn } from "../hooks/useConn";
 import { useUsernameStore } from "../stores/useUsernameStore";
 
 export const Login: React.FC = () => {
-
-    const [username, setUsername] = useUsernameStore((state: any) => [state.username, state.setUsername]);
+    const [name, setName] = useState('');
     const [error, setError] = useState(false);
+
+    const setUsername = useUsernameStore((state: any) => state.setUsername);
+    const conn = useConn();
 
     const router = useRouter();
 
     const onChange = e => {
         setError(false);
-        setUsername(e.target.value);
+        setName(e.target.value);
     }
 
-    const onDone = () => {
-        if (!username) return setError(true);
+    const onDone = async () => {
+        if (!name) return setError(true);
+        if (!conn) return window.location.reload();
+        setUsername((await conn.sendCall('user:login', {name}) as {username: string}).username);
         router.push('/');
     };
 
@@ -26,7 +31,7 @@ export const Login: React.FC = () => {
             <input 
                 className={`w-full text-2xl mt-6 py-2 px-4 rounded-8 text-primary-100 placeholder-primary-300 focus:outline-none bg-primary-700 ${error ? 'border border-secondary' : ''}`}
                 placeholder="Name"
-                value={username}
+                value={name}
                 onChange={e => onChange(e)}
                 onKeyPress={e => e.key == 'Enter' && onDone()}
             />

@@ -1,30 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { ChatMessageModel } from "../../lib/ChatModels";
+import { useConn } from "../hooks/useConn";
+import { ChatMessageModel } from "../lib/ChatModels";
+
 import { ChatInput } from "../modules/chat/ChatInput";
 import { ChatMessage } from "../modules/chat/ChatMessage";
-import { useUsernameStore } from "../stores/useUsernameStore";
 
-let newMsg = false;
+let msgs = [];
 
 export const Chat: React.FC = () => {
-    const username = useUsernameStore((state: any) => state.username);
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState([] as ChatMessageModel[]);
     const [message, setMessage] = useState('');
+  
+    const conn = useConn();
+    useEffect(() => {
+        if (!conn) return;
+        conn.sendCall('chat:fetch', {}).then((v: {messages: ChatMessageModel[]}) => setMessages(v.messages));
+        conn.addListener('chat:new_message', (data: ChatMessageModel) => {
+            setMessages([...msgs, data]);
+        });
+    }, [conn]);
+
+    msgs = messages;
+
 
     let last = React.createRef<HTMLDivElement>();
 
     useEffect(() => {
-        if (newMsg) last.current.scrollIntoView();
-        newMsg = false;
-    });
+        last.current.scrollIntoView();
+    }, [messages]);
 
-    const newMessage = (msg) => {
-        messages.push(msg);
-
+    const newMessage = () => {
+        if (conn) conn.sendCall('chat:send', {message});
         setMessage('');
-        setMessages(messages);
-
-        newMsg = true;
     };
 
     return (
@@ -48,18 +55,7 @@ export const Chat: React.FC = () => {
             <ChatInput
                 value={message}
                 onChange={setMessage}
-                onDone={() => {
-                    let msg = {
-                        from: {
-                            id: 'test-id',
-                            username: 'test-username',
-                            displayName: username
-                        },
-                        id: Math.random().toString(),
-                        message: message
-                    };
-                    newMessage(msg);
-                }}
+                onDone={newMessage}
             />
         </div>
     )

@@ -16,7 +16,7 @@ defmodule Waffle.Message.Chat.Send do
     def execute(changeset, state) do
       with {:ok, %{message: message}} <- apply_action(changeset, :validate) do
         if (state.user != nil) do
-          Hamburger.PubSub.broadcast("chat:all", %ChatMessage{id: Pancake.Utils.Random.big_ascii_id, from: state.user, message: message})
+          Hamburger.PubSub.broadcast("chat:all", Hamburger.Storage.addMessage(%ChatMessage{id: Pancake.Utils.Random.big_ascii_id, from: state.user, message: message}))
           {:noreply, state}
         else
           {:error, "You have to login"}

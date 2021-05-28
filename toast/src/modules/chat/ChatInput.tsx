@@ -36,7 +36,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ placeholder, value, onChan
                 onClick={_ => onDone?.()}
             >
                 <svg viewBox='0 0 512 512' className="h-6.5 w-6.5">
-                    <path fill='none' stroke='#000' stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M268 112l144 144-144 144M392 256H100'/>
+                    <path fill='none' stroke='#000' strokeLinecap='round' strokeLinejoin='round' strokeWidth='48' d='M268 112l144 144-144 144M392 256H100'/>
                 </svg>
             </button>
         </div>

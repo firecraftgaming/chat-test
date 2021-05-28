@@ -9,6 +9,7 @@ defenum(
     # user: 0..1
     {User.Login, 1},
     # chat  2..3
-    {Chat.Send, 2}
+    {Chat.Send, 2},
+    {Chat.Fetch, 3}
   ]
 )

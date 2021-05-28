@@ -8,7 +8,8 @@ defmodule Waffle.Message.Manifest do
     @actions %{
       "user:login" => User.Login,
 
-      "chat:send" => Chat.Send
+      "chat:send" => Chat.Send,
+      "chat:fetch" => Chat.Fetch
     }
 
     # verify that all of the actions are accounted for in the

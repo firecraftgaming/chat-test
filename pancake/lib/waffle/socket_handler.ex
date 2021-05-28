@@ -69,7 +69,6 @@ defmodule Waffle.SocketHandler do
     @spec general_impl(Pancake.json(), state) :: call_result
     defp general_impl(message, state) do
       case message do
-        {"gene:broadcast", payload} -> ws_push(prepare_socket_msg(%{operator: "broadcast", payload: payload}), state)
         {"chat:all", payload} -> ws_push(prepare_socket_msg(%{operator: "chat:new_message", payload: payload}), state)
         _ -> ws_push(nil, state)
       end
