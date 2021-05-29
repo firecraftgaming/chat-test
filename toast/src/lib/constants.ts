@@ -1,1 +1,1 @@
-export const apiBaseUrl = 'http://mc.firecraftgaming.com:3000';
+export const apiBaseUrl = 'https://chat-test.eliyah.repl.co';
