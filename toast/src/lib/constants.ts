@@ -1,1 +1,1 @@
-export const apiBaseUrl = 'http://localhost:4001';
+export const apiBaseUrl = 'http://mc.firecraftgaming.com:3000';
